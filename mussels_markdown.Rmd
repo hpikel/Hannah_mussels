@@ -2,24 +2,26 @@
 title: "mussels_mini_project"
 output: html_document
 ---
-#Loading necessary packages
+#Loading and viewing the Mussel size data set
+
+Loading the necessary libraries
 ```{r}
 library(dplyr)
 library(ggplot2)
 ```
 
-#Reading in the mussel size data
+Reading in the mussel size data
 ```{r}
 mussel_size_data <- read.csv("data/Copy of MusselSizeAll.csv")
 ```
 
 
-#Viewing the entire dataset to get an idea of what it looks like
+Viewing the entire data set to get an idea of what it looks like
 ```{r}
 View(mussel_size_data)
 ```
 
-#Using ncol to find number of columns/variables and n row to find number of rows or values
+Using ncol to find number of columns (variables) and n row to find number of rows (values)
 ```{r}
 ncol(mussel_size_data)
 ```
@@ -28,8 +30,10 @@ nrow(mussel_size_data)
 ```
 
 
-#Using glimpse to view the columns/variables better
+Using glimpse to view the columns/variables better
 ```{r}
 glimpse(mussel_size_data)
 ```
+
+#Plotting the data
 
