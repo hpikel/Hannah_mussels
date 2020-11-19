@@ -13,3 +13,23 @@ library(ggplot2)
 mussel_size_data <- read.csv("data/Copy of MusselSizeAll.csv")
 ```
 
+
+#Viewing the entire dataset to get an idea of what it looks like
+```{r}
+View(mussel_size_data)
+```
+
+#Using ncol to find number of columns/variables and n row to find number of rows or values
+```{r}
+ncol(mussel_size_data)
+```
+```{r}
+nrow(mussel_size_data)
+```
+
+
+#Using glimpse to view the columns/variables better
+```{r}
+glimpse(mussel_size_data)
+```
+
