@@ -1,0 +1,15 @@
+---
+title: "mussels_mini_project"
+output: html_document
+---
+#Loading necessary packages
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+#Reading in the mussel size data
+```{r}
+mussel_size_data <- read.csv("data/Copy of MusselSizeAll.csv")
+```
+
