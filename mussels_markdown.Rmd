@@ -1,39 +1,94 @@
 ---
-title: "mussels_mini_project"
+title: "Effect of Sea Star Wasting Disease on Mussel Abundance"
 output: html_document
----
-#Loading and viewing the Mussel size data set
 
+
+---
 Loading the necessary libraries
 ```{r}
 library(dplyr)
 library(ggplot2)
+library(gridExtra)
 ```
 
-Reading in the mussel size data
+
+Reading in the sea star and mussel data set
+
 ```{r}
-mussel_size_data <- read.csv("data/Copy of MusselSizeAll.csv")
+abundance_data <- read.csv("data/change in pisaster and mussels PISCO sites.csv")
 ```
 
+Viewing the entire dataset to get an idea about what it looks like
 
-Viewing the entire data set to get an idea of what it looks like
 ```{r}
-View(mussel_size_data)
+View(abundance_data)
 ```
 
-Using ncol to find number of columns (variables) and n row to find number of rows (values)
+
+Using ncol and nrow to find out how many variables and values per variable there are
+
 ```{r}
-ncol(mussel_size_data)
+ncol(abundance_data)
 ```
+
 ```{r}
-nrow(mussel_size_data)
+nrow(abundance_data)
 ```
 
+Using glimpse() to get a better view of the columns and their names
 
-Using glimpse to view the columns/variables better
 ```{r}
-glimpse(mussel_size_data)
+glimpse(abundance_data)
+```
+After viewing the data, I have decided I want to manipulate and plot the data of the mean percent mussel cover before and after mass starfish mortality. I feel that this will give me a good idea about how the removal of Pisaster has affected the mussel abundance
+
+
+In the below code I am renaming the columns to pre_mean_cover and post_mean_cover to make them easier to use in code
+
+```{r}
+abundance_data_v2 <- rename(abundance_data, pre_mean_mussel_cover = Mean.percent_cover_Mytcal..pre.SSWS,post_mean_mussel_cover = Mean.percent_cover_Mytcal..post.SSWS)
+
 ```
 
-#Plotting the data
+I am then isolating the two columns I will be using in the graph into their own data frame in order to manipulate them further
+```{r}
+mean_mussel_cover_data <- select(abundance_data_v2, c(pre_mean_mussel_cover, post_mean_mussel_cover))
+
+```
+
+In order to create a histogram with the pre and post data overlapping each other I create separate data frames: one consisting of just the pre SSWD percent mussel cover data and on with the post SSWD data. Then I rename the columns in these new, separate data frames to match so I can graph them together. I use the view() function after every change or rename to make sure the code worked properly.
+
+```{r}
+pre_cover_data <- select(abundance_data_v2, c(pre_mean_mussel_cover))
+
+pre_cover_data_v2 <- rename(pre_cover_data, mean_percent_cover = pre_mean_mussel_cover)
+```
+
+```{r}
+post_cover_data <-  select(abundance_data_v2, c(post_mean_mussel_cover))
+
+post_cover_data_v2 <- rename(post_cover_data, mean_percent_cover = post_mean_mussel_cover)
+```
+
+Finally, I graph the two data frames (pre and post) in a single histogram, making sure they are transparent and a legend is included.
+
+```{r}
+mean_cover_histogram <- rbind(pre_cover_data_v2, post_cover_data_v2)
+
+mean_cover_histogram<- ggplot(mean_cover_histogram) + 
+  geom_histogram(data=pre_cover_data_v2, aes(x=mean_percent_cover, fill = "Pre", alpha = 0.5)) +
+  geom_histogram(data=post_cover_data_v2, aes(x=mean_percent_cover, fill = "Post", alpha = 0.5)) + 
+  xlab("Mean Percent Cover") + 
+  scale_fill_manual("Type", values = c(Pre = "blue", Post = "green"))
+
+print(mean_cover_histogram)
+  
+```
+
+
+
+
+
+
+
 
