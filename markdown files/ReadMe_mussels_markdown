@@ -1,0 +1,9 @@
+The mussels_markdown is a combination of code, prose, and a plot that was produced
+after manipulating data from the dataset containg changes in percent cover/abundace/density
+of both the sea star Pisaster and mussels. 
+
+More specifically, this markdown compares the mean percent cover of mussels before
+and after sea stars were potentially removed by the occurence of sea star wasting 
+disease in that community. 
+
+A histogram was produced to compare the two columns of data. 
