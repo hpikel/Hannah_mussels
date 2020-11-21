@@ -76,8 +76,8 @@ Finally, I graph the two data frames (pre and post) in a single histogram, makin
 mean_cover_histogram <- rbind(pre_cover_data_v2, post_cover_data_v2)
 
 mean_cover_histogram<- ggplot(mean_cover_histogram) + 
-  geom_histogram(data=pre_cover_data_v2, aes(x=mean_percent_cover, fill = "Pre", alpha = 0.5)) +
-  geom_histogram(data=post_cover_data_v2, aes(x=mean_percent_cover, fill = "Post", alpha = 0.5)) + 
+  geom_histogram(data=pre_cover_data_v2, aes(x=mean_percent_cover, fill = "Pre"), alpha = 0.5) +
+  geom_histogram(data=post_cover_data_v2, aes(x=mean_percent_cover, fill = "Post"), alpha = 0.5) + 
   xlab("Mean Percent Cover") + 
   scale_fill_manual("Type", values = c(Pre = "blue", Post = "green"))
 
