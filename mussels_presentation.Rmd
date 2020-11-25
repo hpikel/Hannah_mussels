@@ -1,0 +1,90 @@
+---
+title: "Mussels and Sea Stars"
+output:
+  slidy_presentation: default
+---
+
+## The Data
+
+This data set consists of abundance data on the sea star "Pisaster ochraceus" and local mussels species in the rocky intertidal zones along California' coast. The data set primarily focuses on changes in abundance data for both animals before and after an occurence of Sea Star Wasting Syndrome (SSWS) causes mass sea star mortality. This mini project will only look into the mean percent cover of mussels pre-SSWS and post-SSWS.
+
+
+
+## The relationship between sea stars and mussels
+
+The sea star "Pisaster ochraceus" is a commonly known key stone predator for rocky intertidal communities. As a keystone predator these sea stars keep populations of competitively dominant species (mussels) in check. Some advantages of their role in intertidal communities include:
+
+- Reducing competition for space
+- Maintaining populations of producers (i.e kelp) and their consumers
+- Keeping biodiversity high
+
+
+
+## Sea Star Wastinging Syndrome (SSWS)
+
+Though not much is known about the causes of SSWS, the disease can be fatal to sea stars and has been known to cause mass sea star mortality in rocky intertidal zones. The disease begins with lesions and eventually deterioration of the sea star's body, ending in death. The picture below shows a sea star with the disease. 
+
+![SSWS](https://www.fondriest.com/news/wp-content/uploads/2018/04/Seastar_white_lesions.jpg)
+
+
+
+## Reading in and Viewing the dataset
+```{r, include = FALSE}
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+```
+
+```{r, include=TRUE}
+abundance_data <- read.csv("data/change in pisaster and mussels PISCO sites.csv")
+```
+
+
+```{r, include=TRUE}
+knitr::kable(abundance_data)
+```
+
+
+
+## Isolating the data
+
+The data set contains more data than needed to work with. In the following code, the mean percent cover of mussels pre SSWS and post SSWS is isolated. This makes it easier to manipulate and graph the data. 
+
+```{r, include = TRUE}
+abundance_data_v2 <- rename(abundance_data, pre_mean_mussel_cover = Mean.percent_cover_Mytcal..pre.SSWS,post_mean_mussel_cover = Mean.percent_cover_Mytcal..post.SSWS)
+
+```
+
+```{r, include = TRUE}
+mean_mussel_cover_data <- select(abundance_data_v2, c(pre_mean_mussel_cover, post_mean_mussel_cover))
+
+```
+
+```{r, include = TRUE}
+pre_cover_data <- select(abundance_data_v2, c(pre_mean_mussel_cover))
+
+pre_cover_data_v2 <- rename(pre_cover_data, mean_percent_cover = pre_mean_mussel_cover)
+```
+
+```{r, include = TRUE}
+post_cover_data <-  select(abundance_data_v2, c(post_mean_mussel_cover))
+
+post_cover_data_v2 <- rename(post_cover_data, mean_percent_cover = post_mean_mussel_cover)
+```
+
+
+
+## Histrogram comparing mussel abundance pre- and post-SSWS
+
+```{r, include = TRUE, message = FALSE}
+mean_cover_histogram <- rbind(pre_cover_data_v2, post_cover_data_v2)
+
+mean_cover_histogram<- ggplot(mean_cover_histogram) + 
+  geom_histogram(data=pre_cover_data_v2, aes(x=mean_percent_cover, fill = "Pre"), alpha = 0.5) +
+  geom_histogram(data=post_cover_data_v2, aes(x=mean_percent_cover, fill = "Post"), alpha = 0.5) + 
+  xlab("Mean Percent Cover") + 
+  scale_fill_manual("Type", values = c(Pre = "blue", Post = "green"))
+
+print(mean_cover_histogram)
+```
+
